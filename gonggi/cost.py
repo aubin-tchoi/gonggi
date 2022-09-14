@@ -1,6 +1,6 @@
 from typing import Tuple, List
 
-from .data_structures import Board
+from data_structures import Board
 
 
 def find_nb_occurrences(column: List[int], dice_value: int) -> int:
