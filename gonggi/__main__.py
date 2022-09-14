@@ -41,7 +41,7 @@ def parse_args() -> argparse.Namespace:
         help="Sets the number of sides on the dice.",
     )
     parser.add_argument(
-        "--random_seed",
+        "--deterministic_seed",
         action="store_true",
         help="Uses a random seed to roll the dice. "
         "By default a seed deterministic on the names of the players is used.",
@@ -52,7 +52,7 @@ def parse_args() -> argparse.Namespace:
 
 if __name__ == "__main__":
     args = parse_args()
-    if not args.random_seed:
+    if args.deterministic_seed:
         seed(args.p1 + args.p2)
     my_game = instantiate_new_game(args.size, args.sides, args.p1, args.p2)
     run_game(my_game, first_player_naive_policy, second_player_naive_policy)
