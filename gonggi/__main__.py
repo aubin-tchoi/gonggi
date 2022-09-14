@@ -43,8 +43,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--deterministic_seed",
         action="store_true",
-        help="Uses a random seed to roll the dice. "
-        "By default a seed deterministic on the names of the players is used.",
+        help="Uses a deterministic seed to roll the dice (based on the players' names).",
     )
 
     return parser.parse_args()
