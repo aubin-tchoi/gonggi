@@ -1,3 +1,3 @@
-from .aubin import aubins_policy
 from .base_policies import policy_cli
-from .first_player_policy import naive_policy
+from .first_player_policy import first_player_naive_policy
+from .second_player_policy import second_player_naive_policy
