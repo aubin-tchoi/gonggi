@@ -6,7 +6,7 @@ def second_player_naive_policy(game: Game, dice_value: int) -> int:
         if dice_value in set(
             game["board"]["second_player_grid"][col]
         ) and is_column_not_full(
-            game["board"]["size"], game["board"]["second_player_grid"], col
+            game["board"]["size"], game["board"]["second_player_grid"][col]
         ):
             return col
 
@@ -18,6 +18,6 @@ def second_player_naive_policy(game: Game, dice_value: int) -> int:
         col
         for col in range(game["board"]["size"])
         if is_column_not_full(
-            game["board"]["size"], game["board"]["second_player_grid"], col
+            game["board"]["size"], game["board"]["second_player_grid"][col]
         )
     )

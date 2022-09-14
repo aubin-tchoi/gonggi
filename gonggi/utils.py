@@ -4,6 +4,9 @@ from data_structures import Board, Game
 def print_board(
     board: Board, first_player_name: str = "Julien", second_player_name: str = "Aubin"
 ) -> None:
+    """
+    Prints the content of a board (empty cells are indicated with an X).
+    """
     separation_line = (board["size"] * 4 - 1) * "-"
     print(f"\n{first_player_name}'s side of the board\n{separation_line}")
     for line in range(board["size"]):
@@ -16,7 +19,9 @@ def print_board(
                 for col in range(board["size"])
             )
         )
-    print(f"{separation_line}\n\n{second_player_name}'s side of the board\n{separation_line}")
+    print(
+        f"{separation_line}\n\n{second_player_name}'s side of the board\n{separation_line}"
+    )
     for line in range(board["size"]):
         print(
             " "
@@ -31,6 +36,9 @@ def print_board(
 
 
 def print_scores(game: Game) -> None:
+    """
+    Prints the scoreboard.
+    """
     first_line = f"{game['first_player_name']}'s score: {game['first_player_score']}"
     second_line = f"{game['second_player_name']}'s score: {game['second_player_score']}"
     print(
@@ -44,11 +52,17 @@ def print_scores(game: Game) -> None:
 
 
 def print_game_info(game: Game) -> None:
+    """
+    Prints some information relative to the progression of a game.
+    """
     print_board(game["board"], game["first_player_name"], game["second_player_name"])
     print_scores(game)
 
 
 def print_winner(game: Game) -> None:
+    """
+    Prints a special message for the winner.
+    """
     if game["first_player_score"] > game["second_player_score"]:
         print(f"{game['first_player_name']} won, congratulations!")
     elif game["second_player_score"] > game["first_player_score"]:

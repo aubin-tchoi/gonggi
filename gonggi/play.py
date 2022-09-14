@@ -5,8 +5,11 @@ from cost import compute_scores
 from data_structures import Game
 
 
-def is_column_not_full(size: int, grid: List[List[int]], move: int) -> bool:
-    return len(grid[move]) < size
+def is_column_not_full(size: int, column: List[int]) -> bool:
+    """
+    Finds out whether a column can receive an additional value or not.
+    """
+    return len(column) < size
 
 
 def play_turn(
@@ -14,6 +17,13 @@ def play_turn(
     first_player_policy: Callable[[Game, int], int],
     second_player_policy: Callable[[Game, int], int],
 ) -> None:
+    """
+    Plays a turn of the game by:
+    - rolling a die
+    - letting the first player choose where to put it according to his policy
+    - placing the die and deleting the opponent's dices if applicable
+    and repeating these steps for the second player.
+    """
     # roll a dice
     first_dice_value = randint(1, game["n_sides"])
     print(f"{game['first_player_name']} rolled a {first_dice_value}.")
@@ -21,7 +31,7 @@ def play_turn(
     # choose the column
     first_player_move = first_player_policy(game, first_dice_value)
     while not is_column_not_full(
-        game["board"]["size"], game["board"]["first_player_grid"], first_player_move
+        game["board"]["size"], game["board"]["first_player_grid"][first_player_move]
     ):
         print(f"Column {first_player_move} is full, playing again.")
         first_player_move = first_player_policy(game, first_dice_value)
@@ -40,7 +50,7 @@ def play_turn(
 
     second_player_move = second_player_policy(game, second_dice_value)
     while not is_column_not_full(
-        game["board"]["size"], game["board"]["second_player_grid"], second_player_move
+        game["board"]["size"], game["board"]["second_player_grid"][second_player_move]
     ):
         print(f"Column {second_player_move} is full, retrying.")
         second_player_move = second_player_policy(game, second_dice_value)
@@ -59,6 +69,9 @@ def delete_dices(
     grid: List[List[int]],
     debug_verbose: bool = False,
 ) -> None:
+    """
+    Deletes the dices with a certain value in a column of one of the two grids.
+    """
     if debug_verbose:
         print(f"Popping dices with value {dice_added} from column {column_added}.")
 
@@ -69,6 +82,9 @@ def delete_dices(
 
 
 def update_scores(game: Game) -> None:
+    """
+    Updates the score of each player.
+    """
     game["first_player_score"], game["second_player_score"] = compute_scores(
         game["board"]
     )
