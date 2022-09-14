@@ -8,13 +8,11 @@ def find_nb_occurrences(column: List[int], dice_value: int) -> int:
 
 
 def find_player_score(size: int, player_grid: List[List[int]]) -> int:
-    total_points = 0
-    for col in range(size):
-        for dice in set(player_grid[col]):
-            nb_occurrences = find_nb_occurrences(player_grid[col], dice)
-            total_points += nb_occurrences**2 * dice
-
-    return total_points
+    return sum(
+        dice * find_nb_occurrences(player_grid[col], dice) ** 2
+        for col in range(size)
+        for dice in set(player_grid[col])
+    )
 
 
 def compute_scores(board: Board) -> Tuple[int, int]:
