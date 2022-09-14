@@ -17,7 +17,7 @@ There are two additional behaviors to this game that are described below.
 
 When dice of the same number are placed in the same column, multiply their values.
 
-More precisely, a double amounts to 4 times the value of the dice, and a triple to 9 times.
+More precisely, k similar dices in a same column amount to k ** 2 the value of the dice.
 
 ### Destroy opponent
 
