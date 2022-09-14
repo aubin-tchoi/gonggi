@@ -4,31 +4,30 @@ from data_structures import Board, Game
 def print_board(
     board: Board, first_player_name: str = "Julien", second_player_name: str = "Aubin"
 ) -> None:
-    print(f"\n{first_player_name}'s side of the board")
-    # TODO: n - depends on the size of the board
-    print("------------------------------------------")
+    separation_line = (board["size"] * 4 - 1) * "-"
+    print(f"\n{first_player_name}'s side of the board\n{separation_line}")
     for line in range(board["size"]):
         print(
-            " | ".join(
+            " "
+            + " | ".join(
                 str(board["first_player_grid"][col][line])
                 if line < len(board["first_player_grid"][col])
                 else "X"
                 for col in range(board["size"])
             )
         )
-    print("------------------------------------------\n")
-    print(f"{second_player_name}'s side of the board")
-    print("------------------------------------------")
+    print(f"{separation_line}\n\n{second_player_name}'s side of the board\n{separation_line}")
     for line in range(board["size"]):
         print(
-            " | ".join(
+            " "
+            + " | ".join(
                 str(board["second_player_grid"][col][line])
                 if line < len(board["second_player_grid"][col])
                 else "X"
                 for col in range(board["size"])
             )
         )
-    print("------------------------------------------\n")
+    print(f"{separation_line}\n")
 
 
 def print_scores(game: Game) -> None:
