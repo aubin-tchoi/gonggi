@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Literal
 
 from data_structures import Game, Board
 from play import is_column_not_full, play_turn, update_scores
@@ -63,7 +63,7 @@ def run_game(
     game: Game,
     first_player_policy: Callable[[Game, int], int],
     second_player_policy: Callable[[Game, int], int],
-) -> None:
+) -> Literal["first", "second", "tie"]:
     """
     Plays the game until one side of the board is full.
     """
@@ -71,4 +71,5 @@ def run_game(
         play_turn(game, first_player_policy, second_player_policy)
         update_scores(game)
         print_game_info(game)
-    print_winner(game)
+
+    return print_winner(game)

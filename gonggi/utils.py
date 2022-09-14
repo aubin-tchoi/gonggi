@@ -1,3 +1,5 @@
+from typing import Literal
+
 from data_structures import Board, Game
 
 
@@ -59,15 +61,18 @@ def print_game_info(game: Game) -> None:
     print_scores(game)
 
 
-def print_winner(game: Game) -> None:
+def print_winner(game: Game) -> Literal["first", "second", "tie"]:
     """
     Prints a special message for the winner.
     """
     if game["first_player_score"] > game["second_player_score"]:
         print(f"{game['first_player_name']} won, congratulations!")
+        return "first"
     elif game["second_player_score"] > game["first_player_score"]:
         print(f"{game['second_player_name']} won, congratulations!")
+        return "second"
     else:
         print(
             f"We have a tie between {game['first_player_name']} and {game['second_player_name']}."
         )
+        return "tie"
