@@ -1,3 +1,4 @@
+import logging
 from typing import Literal
 
 from data_structures import Board, Game
@@ -10,9 +11,9 @@ def print_board(
     Prints the content of a board (empty cells are indicated with an X).
     """
     separation_line = (board["size"] * 4 - 1) * "-"
-    print(f"\n{first_player_name}'s side of the board\n{separation_line}")
+    logging.info(f"\n{first_player_name}'s side of the board\n{separation_line}")
     for line in range(board["size"]):
-        print(
+        logging.info(
             " "
             + " | ".join(
                 str(board["first_player_grid"][col][line])
@@ -21,11 +22,11 @@ def print_board(
                 for col in range(board["size"])
             )
         )
-    print(
+    logging.info(
         f"{separation_line}\n\n{second_player_name}'s side of the board\n{separation_line}"
     )
     for line in range(board["size"]):
-        print(
+        logging.info(
             " "
             + " | ".join(
                 str(board["second_player_grid"][col][line])
@@ -34,7 +35,7 @@ def print_board(
                 for col in range(board["size"])
             )
         )
-    print(f"{separation_line}\n")
+    logging.info(f"{separation_line}\n")
 
 
 def print_scores(game: Game) -> None:
@@ -43,14 +44,14 @@ def print_scores(game: Game) -> None:
     """
     first_line = f"{game['first_player_name']}'s score: {game['first_player_score']}"
     second_line = f"{game['second_player_name']}'s score: {game['second_player_score']}"
-    print(
+    logging.info(
         f"{(max(len(first_line), len(second_line)) - 12)// 2 * '-'}"
         f" SCOREBOARD "
         f"{(max(len(first_line), len(second_line)) - 12) // 2 * '-'}"
     )
-    print(f"{game['first_player_name']}'s score: {game['first_player_score']}")
-    print(f"{game['second_player_name']}'s score: {game['second_player_score']}")
-    print(f"{max(len(first_line), len(second_line)) * '-'}\n")
+    logging.info(f"{game['first_player_name']}'s score: {game['first_player_score']}")
+    logging.info(f"{game['second_player_name']}'s score: {game['second_player_score']}")
+    logging.info(f"{max(len(first_line), len(second_line)) * '-'}\n")
 
 
 def print_game_info(game: Game) -> None:
@@ -66,13 +67,13 @@ def print_winner(game: Game) -> Literal["first", "second", "tie"]:
     Prints a special message for the winner.
     """
     if game["first_player_score"] > game["second_player_score"]:
-        print(f"{game['first_player_name']} won, congratulations!")
+        logging.info(f"{game['first_player_name']} won, congratulations!")
         return "first"
     elif game["second_player_score"] > game["first_player_score"]:
-        print(f"{game['second_player_name']} won, congratulations!")
+        logging.info(f"{game['second_player_name']} won, congratulations!")
         return "second"
     else:
-        print(
+        logging.info(
             f"We have a tie between {game['first_player_name']} and {game['second_player_name']}."
         )
         return "tie"

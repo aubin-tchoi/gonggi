@@ -1,3 +1,4 @@
+import logging
 from typing import Callable, Literal
 
 from data_structures import Game, Board
@@ -23,7 +24,7 @@ def instantiate_new_game(
     Returns:
         The newly created game.
     """
-    print(
+    logging.info(
         f"Launching a new game with a board of size {board_size} "
         f"using a {n_sides}-sided die "
         f"opposing {first_player_name} and {second_player_name}.\n"
