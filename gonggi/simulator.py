@@ -1,4 +1,5 @@
 import logging
+from collections import defaultdict
 from typing import Callable, Literal
 
 from data_structures import Game, Board
@@ -33,8 +34,8 @@ def instantiate_new_game(
         n_sides=n_sides,
         board=Board(
             size=board_size,
-            first_player_grid=[[] for _ in range(board_size)],
-            second_player_grid=[[] for _ in range(board_size)],
+            first_player_grid=[defaultdict(int) for _ in range(board_size)],
+            second_player_grid=[defaultdict(int) for _ in range(board_size)],
         ),
         first_player_score=0,
         second_player_score=0,

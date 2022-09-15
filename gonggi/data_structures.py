@@ -1,4 +1,4 @@
-from typing import TypedDict, List
+from typing import TypedDict, List, DefaultDict
 
 
 class Board(TypedDict):
@@ -7,8 +7,8 @@ class Board(TypedDict):
     """
 
     size: int
-    first_player_grid: List[List[int]]
-    second_player_grid: List[List[int]]
+    first_player_grid: List[DefaultDict[int, int]]
+    second_player_grid: List[DefaultDict[int, int]]
 
 
 class Game(TypedDict):
