@@ -1,7 +1,21 @@
 import logging
-from typing import Literal, Tuple
+from typing import Literal, Tuple, List
 
 from .data_structures import Board, Game
+
+
+def print_grid(size: int, grid: List[List[int]]):
+    """
+    Prints a grid with 'X' for empty cells.
+    """
+    for line in range(size):
+        logging.info(
+            " "
+            + " | ".join(
+                str(grid[col][line]) if line < len(grid[col]) else "X"
+                for col in range(size)
+            )
+        )
 
 
 def print_board(
@@ -15,17 +29,18 @@ def print_board(
         logging.info(
             f"\n{player_names[player_idx]}'s side of the board\n{separation_line}"
         )
-        for line in range(board["size"]):
-            logging.info(
-                " "
-                + " | ".join(
-                    str(board["grids"][player_idx][col][line])
-                    if line < len(board["grids"][player_idx][col])
-                    else "X"
-                    for col in range(board["size"])
-                )
-            )
+        print_grid(board["size"], board["grids"][player_idx])
+
     logging.info(f"{separation_line}\n")
+
+
+def print_half_board(board: Board) -> None:
+    """
+    Prints the content of the first half of a board (useful for single player game).
+    """
+    separation_line = (board["size"] * 4 - 1) * "-"
+    print_grid(board["size"], board["grids"][0])
+    logging.info(f"{separation_line}")
 
 
 def print_scores(game: Game) -> None:
@@ -35,7 +50,7 @@ def print_scores(game: Game) -> None:
     first_line = f"{game['player_names'][0]}'s score: {game['player_scores'][0]}"
     second_line = f"{game['player_names'][1]}'s score: {game['player_scores'][1]}"
     logging.info(
-        f"{(max(len(first_line), len(second_line)) - 12)// 2 * '-'}"
+        f"{(max(len(first_line), len(second_line)) - 12) // 2 * '-'}"
         f" SCOREBOARD "
         f"{(max(len(first_line), len(second_line)) - 12) // 2 * '-'}"
     )

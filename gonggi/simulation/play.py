@@ -44,7 +44,7 @@ def play_turn(
 
     # place the dice
     grid[move].append(dice_value)
-    logging.info(f"{player_name} plays on column {move}.")
+    logging.info(f"{player_name} played on column {move}.")
 
     # delete the opponent's dices
     delete_dices(dice_value, move, game["board"]["grids"][int(is_first_player)])

@@ -1,8 +1,16 @@
 import argparse
 import logging
 from random import seed
+from math import sqrt
 
-from gonggi import first_player_policy, second_player_policy, instantiate_new_game, run_game
+from gonggi import (
+    first_player_policy,
+    second_player_policy,
+    instantiate_new_game,
+    run_game,
+    instantiate_new_single_player_game,
+    run_single_player_game,
+)
 
 
 def parse_args() -> argparse.Namespace:
@@ -59,6 +67,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="debug mode (more verbose)",
     )
+    parser.add_argument(
+        "--single_player",
+        action="store_true",
+        help="single player mode",
+    )
 
     return parser.parse_args()
 
@@ -69,7 +82,6 @@ if __name__ == "__main__":
     if args.deterministic_seed:
         seed(args.p1 + args.p2)
 
-    first_wins, second_wins, n_ties = 0, 0, 0
     logging_level = (
         logging.DEBUG
         if args.debug
@@ -79,25 +91,37 @@ if __name__ == "__main__":
     )
     logging.basicConfig(format="%(message)s", level=logging_level)
 
-    for _ in range(args.runs):
-        my_game = instantiate_new_game(args.size, args.sides, args.p1, args.p2)
+    if args.single_player:
+        scores = []
+        for run in range(args.runs):
+            my_game = instantiate_new_single_player_game(args.size, args.sides)
+            scores.append(
+                run_single_player_game(my_game, first_player_policy, logging_level)
+            )
+        mean = sum(scores) / len(scores)
+        stddev = sqrt(sum((score - mean) ** 2 for score in scores) / len(scores))
+        print(f"Mean score over {args.runs} runs: {mean:.2f}, stddev: {stddev}")
+    else:
+        first_wins, second_wins, n_ties = 0, 0, 0
+        for _ in range(args.runs):
+            my_game = instantiate_new_game(args.size, args.sides, args.p1, args.p2)
 
-        # Set the policies of each player here.
-        result = run_game(
-            my_game,
-            first_player_policy,
-            second_player_policy,
-            logging_level,
-        )
-        if result == "first":
-            first_wins += 1
-        elif result == "second":
-            second_wins += 1
-        elif result == "tie":
-            n_ties += 1
+            # Set the policies of each player here.
+            result = run_game(
+                my_game,
+                first_player_policy,
+                second_player_policy,
+                logging_level,
+            )
+            if result == "first":
+                first_wins += 1
+            elif result == "second":
+                second_wins += 1
+            elif result == "tie":
+                n_ties += 1
 
-    if args.runs > 1:
-        print(
-            f"\n{args.p1} won {first_wins} times, "
-            f"{args.p2} {second_wins} times and there were {n_ties} ties."
-        )
+        if args.runs > 1:
+            print(
+                f"\n{args.p1} won {first_wins} times, "
+                f"{args.p2} {second_wins} times and there were {n_ties} ties."
+            )

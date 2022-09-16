@@ -5,9 +5,7 @@ from gonggi.simulation.play import is_column_not_full
 def first_player_naive_policy(game: Game, dice_value: int) -> int:
     # stacking the dice if possible
     for col in range(game["board"]["size"]):
-        if dice_value in set(
-            game["board"]["grids"][0][col]
-        ) and is_column_not_full(
+        if dice_value in set(game["board"]["grids"][0][col]) and is_column_not_full(
             game["board"]["size"], game["board"]["grids"][0][col]
         ):
             return col
@@ -21,7 +19,5 @@ def first_player_naive_policy(game: Game, dice_value: int) -> int:
     return next(
         col
         for col in range(game["board"]["size"])
-        if is_column_not_full(
-            game["board"]["size"], game["board"]["grids"][0][col]
-        )
+        if is_column_not_full(game["board"]["size"], game["board"]["grids"][0][col])
     )
