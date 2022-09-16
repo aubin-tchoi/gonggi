@@ -14,70 +14,40 @@ def is_column_not_full(size: int, column: List[int]) -> bool:
 
 
 def play_turn(
-    game: Game,
-    first_player_policy: Callable[[Game, int], int],
-    second_player_policy: Callable[[Game, int], int],
+    game: Game, policy: Callable[[Game, int], int], is_first_player: bool = True
 ) -> None:
     """
     Plays a turn of the game by:
     - rolling a die
-    - letting the first player choose where to put it according to his policy
+    - letting the player choose where to put it according to his policy
     - placing the die and deleting the opponent's dices if applicable
-    and repeating these steps for the second player.
     """
+    player_name = game["player_names"][not int(is_first_player)]
+    grid = game["board"]["grids"][not int(is_first_player)]
+
     # roll a dice
-    first_dice_value = randint(1, game["n_sides"])
-    logging.info(f"{game['first_player_name']} rolled a {first_dice_value}.")
+    dice_value = randint(1, game["n_sides"])
+    logging.info(f"{player_name} rolled a {dice_value}.")
 
     # choose the column
-    first_player_move = first_player_policy(game, first_dice_value)
-    while not (
-        is_value_in_range := 0
-        <= first_player_move
-        < len(game["board"]["first_player_grid"])
-    ) or not is_column_not_full(
-        game["board"]["size"], game["board"]["first_player_grid"][first_player_move]
+    move = policy(game, dice_value)
+    while not (is_value_in_range := 0 <= move < len(grid)) or not is_column_not_full(
+        game["board"]["size"], grid[move]
     ):
         logging.warning(
-            f"Column {first_player_move} is full, playing again."
+            f"Column {move} is full, playing again."
             if is_value_in_range
             else "Incorrect value passed (not the index of a column), retrying."
         )
-        first_player_move = first_player_policy(game, first_dice_value)
+        exit(1)
+        move = policy(game, dice_value)
 
     # place the dice
-    game["board"]["first_player_grid"][first_player_move].append(first_dice_value)
-    logging.info(f"{game['first_player_name']} plays on column {first_player_move}.")
+    grid[move].append(dice_value)
+    logging.info(f"{player_name} plays on column {move}.")
 
     # delete the opponent's dices
-    delete_dices(
-        first_dice_value, first_player_move, game["board"]["second_player_grid"]
-    )
-
-    second_dice_value = randint(1, game["n_sides"])
-    logging.info(f"{game['second_player_name']} rolled a {second_dice_value}.")
-
-    second_player_move = second_player_policy(game, second_dice_value)
-    while not (
-        is_value_in_range := 0
-        <= second_player_move
-        < len(game["board"]["second_player_grid"])
-    ) or not is_column_not_full(
-        game["board"]["size"], game["board"]["second_player_grid"][second_player_move]
-    ):
-        logging.warning(
-            f"Column {second_player_move} is full, playing again."
-            if is_value_in_range
-            else "Incorrect value passed (not the index of a column), retrying."
-        )
-        second_player_move = second_player_policy(game, second_dice_value)
-
-    game["board"]["second_player_grid"][second_player_move].append(second_dice_value)
-    logging.info(f"{game['second_player_name']} plays on column {second_player_move}.")
-
-    delete_dices(
-        second_dice_value, second_player_move, game["board"]["first_player_grid"]
-    )
+    delete_dices(dice_value, move, game["board"]["grids"][int(is_first_player)])
 
 
 def delete_dices(
@@ -100,6 +70,4 @@ def update_scores(game: Game) -> None:
     """
     Updates the score of each player.
     """
-    game["first_player_score"], game["second_player_score"] = compute_scores(
-        game["board"]
-    )
+    game["player_scores"] = compute_scores(game["board"])

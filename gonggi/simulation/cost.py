@@ -19,6 +19,6 @@ def compute_scores(board: Board) -> Tuple[int, int]:
     Computes the scores of the two players.
     """
     return (
-        find_player_score(board["size"], board["first_player_grid"]),
-        find_player_score(board["size"], board["second_player_grid"]),
+        find_player_score(board["size"], board["grids"][0]),
+        find_player_score(board["size"], board["grids"][1]),
     )

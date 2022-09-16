@@ -39,13 +39,10 @@ def instantiate_new_game(
         n_sides=n_sides,
         board=Board(
             size=board_size,
-            first_player_grid=[[] for _ in range(board_size)],
-            second_player_grid=[[] for _ in range(board_size)],
+            grids=([[] for _ in range(board_size)], [[] for _ in range(board_size)]),
         ),
-        first_player_score=0,
-        second_player_score=0,
-        first_player_name=first_player_name,
-        second_player_name=second_player_name,
+        player_scores=(0, 0),
+        player_names=(first_player_name, second_player_name),
     )
 
 
@@ -53,16 +50,12 @@ def is_board_not_full(game: Game) -> bool:
     """
     Finds out if there is room left on both players' sides of the grid.
     """
-    return any(
-        is_column_not_full(
-            game["board"]["size"], game["board"]["first_player_grid"][col]
+    return all(
+        any(
+            is_column_not_full(game["board"]["size"], grid[col])
+            for col in range(game["board"]["size"])
         )
-        for col in range(game["board"]["size"])
-    ) and any(
-        is_column_not_full(
-            game["board"]["size"], game["board"]["second_player_grid"][col]
-        )
-        for col in range(game["board"]["size"])
+        for grid in game["board"]["grids"]
     )
 
 
@@ -76,7 +69,8 @@ def run_game(
     Plays the game until one side of the board is full.
     """
     while is_board_not_full(game):
-        play_turn(game, first_player_policy, second_player_policy)
+        play_turn(game, first_player_policy)
+        play_turn(game, second_player_policy, False)
         update_scores(game)
         # check added to improve performances, see: https://docs.python.org/2/howto/logging.html#optimization
         if logging_level <= 20:
