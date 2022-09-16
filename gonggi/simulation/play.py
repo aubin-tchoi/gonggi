@@ -14,7 +14,10 @@ def is_column_not_full(size: int, column: List[int]) -> bool:
 
 
 def play_turn(
-    game: Game, policy: Callable[[Game, int], int], is_first_player: bool = True
+    game: Game,
+    policy: Callable[[Game, int], int],
+    is_first_player: bool = True,
+    remove_deletion: bool = False,
 ) -> None:
     """
     Plays a turn of the game by:
@@ -46,8 +49,9 @@ def play_turn(
     grid[move].append(dice_value)
     logging.info(f"{player_name} played on column {move}.")
 
-    # delete the opponent's dices
-    delete_dices(dice_value, move, game["board"]["grids"][int(is_first_player)])
+    if not remove_deletion:
+        # delete the opponent's dices
+        delete_dices(dice_value, move, game["board"]["grids"][int(is_first_player)])
 
 
 def delete_dices(

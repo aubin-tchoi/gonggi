@@ -3,14 +3,20 @@ from typing import Tuple, List
 from .data_structures import Board
 
 
-def find_player_score(size: int, player_grid: List[List[int]]) -> int:
+def find_player_score(
+    size: int, player_grid: List[List[int]], remove_stacking: bool = False
+) -> int:
     """
     Finds out the score associated with a grid.
     """
-    return sum(
-        dice * player_grid[col].count(dice) ** 2
-        for col in range(size)
-        for dice in set(player_grid[col])
+    return (
+        sum(dice for col in range(len(player_grid)) for dice in player_grid[col])
+        if remove_stacking
+        else sum(
+            dice * player_grid[col].count(dice) ** 2
+            for col in range(size)
+            for dice in set(player_grid[col])
+        )
     )
 
 
