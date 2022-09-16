@@ -71,19 +71,24 @@ if __name__ == "__main__":
         seed(args.p1 + args.p2)
 
     first_wins, second_wins, n_ties = 0, 0, 0
-    if args.debug:
-        logging.basicConfig(format="%(message)s", level=logging.DEBUG)
-    elif args.no_verbose:
-        logging.basicConfig(format="%(message)s")
-    else:
-        logging.basicConfig(format="%(message)s", level=logging.INFO)
+    logging_level = (
+        logging.DEBUG
+        if args.debug
+        else logging.WARNING
+        if args.no_verbose
+        else logging.INFO
+    )
+    logging.basicConfig(format="%(message)s", level=logging_level)
 
     for _ in range(args.runs):
         my_game = instantiate_new_game(args.size, args.sides, args.p1, args.p2)
 
         # Set the policies of each player here.
         result = run_game(
-            my_game, first_player_naive_policy, second_player_naive_policy
+            my_game,
+            first_player_naive_policy,
+            second_player_naive_policy,
+            logging_level,
         )
         if result == "first":
             first_wins += 1
