@@ -31,10 +31,18 @@ def play_turn(
 
     # choose the column
     first_player_move = first_player_policy(game, first_dice_value)
-    while not is_column_not_full(
+    while not (
+        is_value_in_range := 0
+        <= first_player_move
+        < len(game["board"]["first_player_grid"])
+    ) or not is_column_not_full(
         game["board"]["size"], game["board"]["first_player_grid"][first_player_move]
     ):
-        logging.info(f"Column {first_player_move} is full, playing again.")
+        logging.warning(
+            f"Column {first_player_move} is full, playing again."
+            if is_value_in_range
+            else "Incorrect value passed (not the index of a column), retrying."
+        )
         first_player_move = first_player_policy(game, first_dice_value)
 
     # place the dice
@@ -50,10 +58,18 @@ def play_turn(
     logging.info(f"{game['second_player_name']} rolled a {second_dice_value}.")
 
     second_player_move = second_player_policy(game, second_dice_value)
-    while not is_column_not_full(
+    while not (
+        is_value_in_range := 0
+        <= second_player_move
+        < len(game["board"]["second_player_grid"])
+    ) or not is_column_not_full(
         game["board"]["size"], game["board"]["second_player_grid"][second_player_move]
     ):
-        logging.info(f"Column {second_player_move} is full, retrying.")
+        logging.warning(
+            f"Column {second_player_move} is full, playing again."
+            if is_value_in_range
+            else "Incorrect value passed (not the index of a column), retrying."
+        )
         second_player_move = second_player_policy(game, second_dice_value)
 
     game["board"]["second_player_grid"][second_player_move].append(second_dice_value)
