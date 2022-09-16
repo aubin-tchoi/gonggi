@@ -92,15 +92,18 @@ if __name__ == "__main__":
     logging.basicConfig(format="%(message)s", level=logging_level)
 
     if args.single_player:
-        scores = []
+        mean, stddev = 0, 0
         for run in range(args.runs):
             my_game = instantiate_new_single_player_game(args.size, args.sides)
-            scores.append(
-                run_single_player_game(my_game, first_player_policy, logging_level)
+            final_score = run_single_player_game(
+                my_game, first_player_policy, logging_level
             )
-        mean = sum(scores) / len(scores)
-        stddev = sqrt(sum((score - mean) ** 2 for score in scores) / len(scores))
-        print(f"Mean score over {args.runs} runs: {mean:.2f}, stddev: {stddev}")
+            stddev = sqrt(
+                (run - 1) / (run or 1) * stddev**2
+                + (final_score - mean) ** 2 / (run + 1)
+            )
+            mean = (mean * run + final_score) / (run + 1)
+        print(f"Mean score over {args.runs} runs: {mean:.2f}, stddev: {stddev:.2f}")
     else:
         first_wins, second_wins, n_ties = 0, 0, 0
         for _ in range(args.runs):
