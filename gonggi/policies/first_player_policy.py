@@ -1,5 +1,5 @@
-from gonggi.data_structures import Game
-from gonggi.play import is_column_not_full
+from gonggi.simulation.data_structures import Game
+from gonggi.simulation.play import is_column_not_full
 
 
 def first_player_naive_policy(game: Game, dice_value: int) -> int:

@@ -1,5 +1,5 @@
-from gonggi.data_structures import Game
-from gonggi.utils import print_board
+from gonggi.simulation.data_structures import Game
+from gonggi.simulation.display import print_board
 
 
 def policy_template(game: Game, dice_value: int) -> int:
