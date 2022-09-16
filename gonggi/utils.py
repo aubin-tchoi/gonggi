@@ -1,7 +1,7 @@
 import logging
 from typing import Literal
 
-from data_structures import Board, Game
+from .data_structures import Board, Game
 
 
 def print_board(

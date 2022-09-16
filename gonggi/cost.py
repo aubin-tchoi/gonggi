@@ -1,6 +1,6 @@
 from typing import Tuple, List
 
-from data_structures import Board
+from .data_structures import Board
 
 
 def find_player_score(size: int, player_grid: List[List[int]]) -> int:

@@ -2,8 +2,7 @@ import argparse
 import logging
 from random import seed
 
-from policies import *
-from simulator import instantiate_new_game, run_game
+from gonggi import first_player_policy, second_player_policy, instantiate_new_game, run_game
 
 
 def parse_args() -> argparse.Namespace:
@@ -86,8 +85,8 @@ if __name__ == "__main__":
         # Set the policies of each player here.
         result = run_game(
             my_game,
-            first_player_naive_policy,
-            second_player_naive_policy,
+            first_player_policy,
+            second_player_policy,
             logging_level,
         )
         if result == "first":

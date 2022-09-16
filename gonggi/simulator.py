@@ -1,9 +1,9 @@
 import logging
 from typing import Callable, Literal
 
-from data_structures import Game, Board
-from play import is_column_not_full, play_turn, update_scores
-from utils import print_game_info, print_winner
+from .data_structures import Game, Board
+from .play import is_column_not_full, play_turn, update_scores
+from .utils import print_game_info, print_winner
 
 
 def instantiate_new_game(

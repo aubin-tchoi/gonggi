@@ -2,8 +2,8 @@ import logging
 from random import randint
 from typing import Callable, List
 
-from cost import compute_scores
-from data_structures import Game
+from .cost import compute_scores
+from .data_structures import Game
 
 
 def is_column_not_full(size: int, column: List[int]) -> bool:
