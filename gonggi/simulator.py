@@ -73,7 +73,7 @@ def run_game(
         play_turn(game, first_player_policy, second_player_policy)
         update_scores(game)
         # check added to improve performances, see: https://docs.python.org/2/howto/logging.html#optimization
-        if logging_level >= 20:
+        if logging_level <= 20:
             print_game_info(game)
 
     return print_winner(game)
