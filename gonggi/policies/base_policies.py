@@ -1,4 +1,5 @@
-from gonggi import Game, print_board
+from gonggi.data_structures import Game
+from gonggi.utils import print_board
 
 
 def policy_template(game: Game, dice_value: int) -> int:
