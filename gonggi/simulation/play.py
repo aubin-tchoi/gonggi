@@ -1,16 +1,16 @@
 import logging
 from random import randint
-from typing import Callable, List, DefaultDict
+from typing import Callable, List
 
 from .cost import compute_scores
 from .data_structures import Game
 
 
-def is_column_not_full(size: int, column: DefaultDict[int, int]) -> bool:
+def is_column_not_full(size: int, column: List[int]) -> bool:
     """
     Finds out whether a column can receive an additional value or not.
     """
-    return sum(column.values()) < size
+    return len(column) < size
 
 
 def play_turn(
@@ -38,7 +38,7 @@ def play_turn(
         first_player_move = first_player_policy(game, first_dice_value)
 
     # place the dice
-    game["board"]["first_player_grid"][first_player_move][first_dice_value] += 1
+    game["board"]["first_player_grid"][first_player_move].append(first_dice_value)
     logging.info(f"{game['first_player_name']} plays on column {first_player_move}.")
 
     # delete the opponent's dices
@@ -56,7 +56,7 @@ def play_turn(
         logging.info(f"Column {second_player_move} is full, retrying.")
         second_player_move = second_player_policy(game, second_dice_value)
 
-    game["board"]["second_player_grid"][second_player_move][second_dice_value] += 1
+    game["board"]["second_player_grid"][second_player_move].append(second_dice_value)
     logging.info(f"{game['second_player_name']} plays on column {second_player_move}.")
 
     delete_dices(
@@ -67,17 +67,17 @@ def play_turn(
 def delete_dices(
     dice_added: int,
     column_added: int,
-    grid: List[DefaultDict[int, int]],
+    grid: List[List[int]],
 ) -> None:
     """
     Deletes the dices with a certain value in a column of one of the two grids.
     """
     logging.debug(f"Popping dices with value {dice_added} from column {column_added}.")
-    if dice_added in grid[column_added]:
-        logging.info(
-            f"Removing {grid[column_added][dice_added]} dice in column {column_added} with value {dice_added}."
-        )
-        grid[column_added].pop(dice_added)
+
+    for j in range(len(grid[column_added]) - 1, -1, -1):
+        if grid[column_added][j] == dice_added:
+            logging.info(f"Removing a dice in row {j} with value {dice_added}.")
+            grid[column_added].pop(j)
 
 
 def update_scores(game: Game) -> None:

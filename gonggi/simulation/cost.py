@@ -1,16 +1,16 @@
-from typing import Tuple, List, DefaultDict
+from typing import Tuple, List
 
 from .data_structures import Board
 
 
-def find_player_score(size: int, player_grid: List[DefaultDict[int, int]]) -> int:
+def find_player_score(size: int, player_grid: List[List[int]]) -> int:
     """
     Finds out the score associated with a grid.
     """
     return sum(
-        dice * occurrences**2
+        dice * player_grid[col].count(dice) ** 2
         for col in range(size)
-        for dice, occurrences in player_grid[col].items()
+        for dice in set(player_grid[col])
     )
 
 
