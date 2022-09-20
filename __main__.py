@@ -10,6 +10,7 @@ from gonggi import (
     run_game,
     instantiate_new_single_player_game,
     run_single_player_game,
+    apply_to_player,
 )
 
 
@@ -96,7 +97,7 @@ if __name__ == "__main__":
         for run in range(args.runs):
             my_game = instantiate_new_single_player_game(args.size, args.sides)
             final_score = run_single_player_game(
-                my_game, first_player_policy, logging_level
+                my_game, apply_to_player(first_player_policy, 1), logging_level
             )
             stddev = sqrt(
                 (run - 1) / (run or 1) * stddev**2
@@ -112,8 +113,8 @@ if __name__ == "__main__":
             # Set the policies of each player here.
             result = run_game(
                 my_game,
-                first_player_policy,
-                second_player_policy,
+                apply_to_player(first_player_policy, 0),
+                apply_to_player(second_player_policy, 1),
                 logging_level,
             )
             if result == "first":
