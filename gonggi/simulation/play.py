@@ -34,6 +34,7 @@ def play_turn(
 
     # choose the column
     move = policy(game, dice_value)
+    n_tries = 0
     while not (is_value_in_range := 0 <= move < len(grid)) or not is_column_not_full(
         game["board"]["size"], grid[move]
     ):
@@ -43,6 +44,9 @@ def play_turn(
             else "Incorrect value passed (not the index of a column), retrying."
         )
         move = policy(game, dice_value)
+        if n_tries > 100:
+            raise RuntimeError("There is an issue with the policy.")
+        n_tries += 1
 
     # place the dice
     grid[move].append(dice_value)
