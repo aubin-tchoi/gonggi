@@ -55,3 +55,14 @@ def fill_first_then_stack(game: Game, dice_value: int) -> int:
         for col in range(game["board"]["size"])
         if is_column_not_full(game["board"]["size"], game["board"]["grids"][0][col])
     )
+
+def counter(game: Game, dice_value: int) -> int:
+    for col in range(game["board"]["size"]):
+        if dice_value in game["board"][col]:
+           return col
+
+    return next(
+        col
+        for col in range(game["board"]["size"])
+        if is_column_not_full(game["board"]["size"], game["board"]["grids"][1][col])
+    )
