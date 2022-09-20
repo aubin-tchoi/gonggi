@@ -61,7 +61,7 @@ def greedy(game: Game, dice_value: int, player_index: int) -> int:
     best_score, best_move = (
         game["player_scores"][player_index]
         - game["player_scores"][int(not player_index)],
-        0,
+        None,
     )
     # TODO: combine with another policy to choose between multiple maxima
     for move in range(game["board"]["size"]):
@@ -79,4 +79,8 @@ def greedy(game: Game, dice_value: int, player_index: int) -> int:
             ) > best_score:
                 best_score, best_move = score, move
 
-    return best_move
+    return (
+        best_move
+        if best_move is not None
+        else first_non_full_column(game, dice_value, player_index)
+    )

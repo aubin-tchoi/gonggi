@@ -97,7 +97,7 @@ if __name__ == "__main__":
         for run in range(args.runs):
             my_game = instantiate_new_single_player_game(args.size, args.sides)
             final_score = run_single_player_game(
-                my_game, apply_to_player(first_player_policy, 1), logging_level
+                my_game, apply_to_player(first_player_policy, 0), logging_level
             )
             stddev = sqrt(
                 (run - 1) / (run or 1) * stddev**2
