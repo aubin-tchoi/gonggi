@@ -42,7 +42,6 @@ def play_turn(
             if is_value_in_range
             else "Incorrect value passed (not the index of a column), retrying."
         )
-        exit(1)
         move = policy(game, dice_value)
 
     # place the dice
