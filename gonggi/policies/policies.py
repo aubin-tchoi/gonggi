@@ -1,10 +1,11 @@
-from gonggi.simulation import Game
+from copy import deepcopy
+
+from gonggi.simulation import compute_scores, Game, delete_dices, is_column_not_full
 from .sub_policies import (
     stack,
     first_empty_column,
     first_non_full_column,
     counter,
-    greedy,
 )
 from .utils import chain_sub_policies
 
@@ -56,10 +57,26 @@ def counter_then_fill(game: Game, dice_value: int, player_index: int) -> int:
     )
 
 
-def greedy_or_fill(game: Game, dice_value: int, player_index: int) -> int:
-    return chain_sub_policies(
-        (game, dice_value, player_index),
-        greedy,
-        first_empty_column,
-        first_non_full_column,
+def greedy(game: Game, dice_value: int, player_index: int) -> int:
+    best_score, best_move = (
+        game["player_scores"][player_index]
+        - game["player_scores"][int(not player_index)],
+        0,
     )
+    # TODO: combine with another policy to choose between multiple maxima
+    for move in range(game["board"]["size"]):
+        if is_column_not_full(
+            game["board"]["size"], game["board"]["grids"][player_index][move]
+        ):
+            # computing the hypothetical score if the player were to do this move
+            board_copy = deepcopy(game["board"])
+            board_copy["grids"][player_index][move].append(dice_value)
+            delete_dices(dice_value, move, board_copy["grids"][int(not player_index)])
+            updated_scores = compute_scores(board_copy)
+            if (
+                score := updated_scores[player_index]
+                - updated_scores[int(not player_index)]
+            ) > best_score:
+                best_score, best_move = score, move
+
+    return best_move
