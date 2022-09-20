@@ -1,7 +1,7 @@
 from random import randint
 
 from gonggi.simulation import Game, is_column_not_full
-from .score_policies import greedy
+from .score_policies import greedy, best_counter
 from .sub_policies import (
     stack,
     first_empty_column,
@@ -80,3 +80,21 @@ def greedy_then_first_non_full(game: Game, dice_value: int, player_index: int) -
         greedy,
         sub_policy_to_score_policy(first_non_full_column),
     )
+
+
+def greedy_then_fill(game: Game, dice_value: int, player_index: int) -> int:
+    return chain_score_policies(
+        (game, dice_value, player_index),
+        greedy,
+        sub_policy_to_score_policy(first_empty_column),
+    )
+
+
+def greedy_then_counter_then_fill(game: Game, dice_value: int, player_index: int) -> int:
+    return chain_score_policies(
+        (game, dice_value, player_index),
+        greedy,
+        best_counter,
+        sub_policy_to_score_policy(first_empty_column),
+    )
+
