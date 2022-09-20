@@ -83,6 +83,9 @@ def counter(game: Game, dice_value: int, player_index: int) -> Optional[int]:
             col
             for col in range(game["board"]["size"])
             if dice_value in game["board"]["grids"][int(not player_index)][col]
+            and is_column_not_full(
+                game["board"]["size"], game["board"]["grids"][player_index][col]
+            )
         ),
         None,
     )
