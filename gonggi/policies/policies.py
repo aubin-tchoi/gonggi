@@ -1,13 +1,14 @@
-from copy import deepcopy
+from random import randint
 
-from gonggi.simulation import compute_scores, Game, delete_dices, is_column_not_full
+from gonggi.simulation import Game, is_column_not_full
+from .score_policies import greedy
 from .sub_policies import (
     stack,
     first_empty_column,
     first_non_full_column,
     counter,
 )
-from .utils import chain_sub_policies
+from .utils import chain_sub_policies, chain_score_policies, sub_policy_to_score_policy
 
 
 # noinspection PyUnusedLocal
@@ -17,6 +18,22 @@ def left_to_right(game: Game, dice_value: int, player_index: int) -> int:
     Can be used to benchmark a policy, any policy should be better than this one.
     """
     return first_non_full_column(game, dice_value, player_index)
+
+
+# noinspection PyUnusedLocal
+def random_choice(game: Game, dice_value: int, player_index: int) -> int:
+    """
+    Choosing a random column.
+    Be careful when using this whilst using a random seed for the dice rolls as the two would interfere.
+    """
+    admissible_columns = [
+        col
+        for col in range(game["board"]["size"])
+        if is_column_not_full(
+            game["board"]["size"], game["board"]["grids"][player_index][col]
+        )
+    ]
+    return admissible_columns[randint(0, len(admissible_columns) - 1)]
 
 
 def stack_first_then_fill(game: Game, dice_value: int, player_index: int) -> int:
@@ -57,30 +74,9 @@ def counter_then_fill(game: Game, dice_value: int, player_index: int) -> int:
     )
 
 
-def greedy(game: Game, dice_value: int, player_index: int) -> int:
-    best_score, best_move = (
-        game["player_scores"][player_index]
-        - game["player_scores"][int(not player_index)],
-        None,
-    )
-    # TODO: combine with another policy to choose between multiple maxima
-    for move in range(game["board"]["size"]):
-        if is_column_not_full(
-            game["board"]["size"], game["board"]["grids"][player_index][move]
-        ):
-            # computing the hypothetical score if the player were to do this move
-            board_copy = deepcopy(game["board"])
-            board_copy["grids"][player_index][move].append(dice_value)
-            delete_dices(dice_value, move, board_copy["grids"][int(not player_index)])
-            updated_scores = compute_scores(board_copy)
-            if (
-                score := updated_scores[player_index]
-                - updated_scores[int(not player_index)]
-            ) > best_score:
-                best_score, best_move = score, move
-
-    return (
-        best_move
-        if best_move is not None
-        else first_non_full_column(game, dice_value, player_index)
+def greedy_then_first_non_full(game: Game, dice_value: int, player_index: int) -> int:
+    return chain_score_policies(
+        (game, dice_value, player_index),
+        greedy,
+        sub_policy_to_score_policy(first_non_full_column),
     )
