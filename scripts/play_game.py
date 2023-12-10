@@ -24,7 +24,7 @@ def parse_args() -> argparse.Namespace:
     Returns:
         The Namespace that stores the arguments passed.
     """
-    parser = argparse.ArgumentParser(description="Main entry point for the simulator")
+    parser = argparse.ArgumentParser(description="Main entry point for the simulator.")
 
     parser.add_argument(
         "--p1",
@@ -39,29 +39,6 @@ def parse_args() -> argparse.Namespace:
         help="set the name of the second player",
     )
     parser.add_argument(
-        "--runs",
-        type=int,
-        default=1,
-        help="set the number of runs (if more than 1 run is performed, prints the distribution of wins)",
-    )
-    parser.add_argument(
-        "--size",
-        type=int,
-        default=3,
-        help="set the size of the board",
-    )
-    parser.add_argument(
-        "--sides",
-        type=int,
-        default=6,
-        help="set the number of sides on the dice",
-    )
-    parser.add_argument(
-        "--deterministic_seed",
-        action="store_true",
-        help="use a deterministic seed to roll the dice (based on the players' names)",
-    )
-    parser.add_argument(
         "--no_verbose",
         action="store_true",
         help="do not log info on stdout",
@@ -71,10 +48,34 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="debug mode (more verbose)",
     )
-    parser.add_argument(
+    game_settings = parser.add_argument_group("Game settings")
+    game_settings.add_argument(
         "--single_player",
         action="store_true",
         help="single player mode",
+    )
+    game_settings.add_argument(
+        "--runs",
+        type=int,
+        default=1,
+        help="set the number of runs (if more than 1 run is performed, prints the distribution of wins)",
+    )
+    game_settings.add_argument(
+        "--size",
+        type=int,
+        default=3,
+        help="set the size of the board",
+    )
+    game_settings.add_argument(
+        "--sides",
+        type=int,
+        default=6,
+        help="set the number of sides on the dice",
+    )
+    game_settings.add_argument(
+        "--deterministic_seed",
+        action="store_true",
+        help="use a deterministic seed to roll the dice (based on the players' names)",
     )
 
     return parser.parse_args()
