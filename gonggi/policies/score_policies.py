@@ -1,5 +1,5 @@
 """
-A scores policy is a policy that returns a list of scores associated with each column.
+A score policy is a policy that returns a list of scores associated with each column.
 
 Score policies all have the same typing: Callable[[Game, int, int], List[int]],
 which allows them to be chained using utils.chain_score_policies.
@@ -8,7 +8,7 @@ The length of the list returned should be equal to the number of columns.
 from copy import deepcopy
 from typing import List
 
-from gonggi.simulation import compute_scores, Game, delete_dices, is_column_not_full
+from gonggi.simulation import Game, compute_scores, delete_dices, is_column_not_full
 
 
 def best_counter(game: Game, dice_value: int, player_index: int) -> List[int]:

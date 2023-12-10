@@ -1,6 +1,6 @@
-from typing import Tuple, Callable, Optional, Set, List
+from typing import Callable, List, Optional, Set, Tuple
 
-from gonggi.simulation import Game, Board, is_column_not_full
+from gonggi.simulation import Board, Game, is_column_not_full
 
 
 def chain_sub_policies(

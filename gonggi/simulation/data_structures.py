@@ -1,4 +1,4 @@
-from typing import TypedDict, List, Tuple
+from typing import List, Tuple, TypedDict
 
 
 class Board(TypedDict):

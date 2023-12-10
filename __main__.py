@@ -1,17 +1,17 @@
 import argparse
 import logging
-from random import seed
 from math import sqrt
+from random import seed
 
 from gonggi import (
+    apply_to_player,
     first_player_policy,
+    instantiate_new_game,
+    instantiate_new_single_player_game,
+    run_game,
+    run_single_player_game,
     second_player_policy,
     single_player_policy,
-    instantiate_new_game,
-    run_game,
-    instantiate_new_single_player_game,
-    run_single_player_game,
-    apply_to_player,
 )
 
 

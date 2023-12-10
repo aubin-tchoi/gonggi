@@ -2,12 +2,12 @@ import logging
 from typing import Callable
 
 from .simulation import (
-    Game,
     Board,
+    Game,
     is_column_not_full,
     play_turn,
-    update_scores,
     print_half_board,
+    update_scores,
 )
 
 

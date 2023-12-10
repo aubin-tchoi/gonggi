@@ -1,5 +1,5 @@
 import logging
-from typing import Literal, Tuple, List
+from typing import List, Literal, Tuple
 
 from .data_structures import Board, Game
 
