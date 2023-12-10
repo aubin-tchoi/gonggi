@@ -9,7 +9,7 @@
 
 A die game of risk and reward.
 
-You will find here the rules and the implementation of a simulator for a 2-players dice game.
+You will find here the rules and the implementation of a simulator for a 2-player dice game.
 
 > Note that this game has nothing to do with the game of gonggi, which is a traditional Korean game.
 > 
@@ -36,13 +36,13 @@ There are two additional behaviors to this game that are described below.
 
 When dice of the same number are placed in the same column, multiply their values.
 
-More precisely, k similar dices in a same column amount to k ** 2 the value of the dice.
+More precisely, k similar dices in the same column amount to k ** 2 the value of the dice.
 
 ### ♟️ Destroy opponent
 
 Destroy your opponent's dice by matching yours to theirs.
 
-If a player places a die of value x in column j of his side of the board, all dice with the same value are removed from\
+If a player places a die of value x in column j of his side of the board, all dice with the same value are removed from
 column j of his opponent's side of the board.
 
 ## Implementation

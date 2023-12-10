@@ -28,7 +28,7 @@ def play_turn(
     player_name = game["player_names"][not int(is_first_player)]
     grid = game["board"]["grids"][not int(is_first_player)]
 
-    # roll a dice
+    # roll a die
     dice_value = randint(1, game["n_sides"])
     logging.info(f"{player_name} rolled a {dice_value}.")
 

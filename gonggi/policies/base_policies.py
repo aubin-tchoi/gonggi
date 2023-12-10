@@ -7,7 +7,7 @@ from gonggi.simulation.display import print_board
 # noinspection PyUnusedLocal
 def policy_template(game: Game, dice_value: int, player_index: int) -> int:
     """
-    A policy will always take these 2 arguments.
+    A policy will always take these two arguments.
 
     Args:
         game: The state of the game. You can retrieve the values on the board here.
