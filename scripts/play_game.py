@@ -78,9 +78,7 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-if __name__ == "__main__":
-    args = parse_args()
-
+def main(args: argparse.Namespace = parse_args()) -> None:
     if args.deterministic_seed:
         seed(args.p1 + args.p2)
 
@@ -130,3 +128,7 @@ if __name__ == "__main__":
                 f"\n{args.p1} won {first_wins} times, "
                 f"{args.p2} {second_wins} times and there were {n_ties} ties."
             )
+
+
+if __name__ == "__main__":
+    main()

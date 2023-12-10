@@ -15,6 +15,9 @@ isort = "^5.13.0"
 mypy = "^1.7.1"
 pre-commit = "^3.6.0"
 
+[tool.poetry.scripts]
+play_game = "scripts.play_game:main"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
