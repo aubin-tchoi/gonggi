@@ -10,7 +10,6 @@ from gonggi import (
     run_single_player_game,
 )
 from gonggi.policies import (
-    apply_to_player,
     first_player_policy,
     second_player_policy,
     single_player_policy,
@@ -98,9 +97,7 @@ def main(args: argparse.Namespace = parse_args()) -> None:
         mean, stddev = 0.0, 0.0
         for run in range(args.runs):
             my_game = instantiate_new_single_player_game(args.size, args.sides)
-            final_score = run_single_player_game(
-                my_game, apply_to_player(single_player_policy, 0)
-            )
+            final_score = run_single_player_game(my_game, single_player_policy)
             stddev = sqrt(
                 (run - 1) / (run or 1) * stddev**2
                 + (final_score - mean) ** 2 / (run + 1)
@@ -112,11 +109,7 @@ def main(args: argparse.Namespace = parse_args()) -> None:
         for _ in range(args.runs):
             my_game = instantiate_new_game(args.size, args.sides, args.p1, args.p2)
 
-            result = run_game(
-                my_game,
-                apply_to_player(first_player_policy, 0),
-                apply_to_player(second_player_policy, 1),
-            )
+            result = run_game(my_game, first_player_policy, second_player_policy)
             if result == "first":
                 first_wins += 1
             elif result == "second":

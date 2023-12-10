@@ -39,7 +39,7 @@ def chain_score_policies(
     return max(
         filter(
             lambda col: is_column_not_full(
-                board_size, args[0]["board"]["grids"][args[2]][col]
+                board_size, args[0]["board"]["grids"][args[1]][col]
             ),
             range(board_size),
         ),
@@ -77,7 +77,7 @@ def sub_policy_to_score_policy(
     """
     Converts a sub policy into a score policy (with a score of 1 on the chosen column and zero elsewhere).
     """
-    return lambda game, dice_value, player_index: [
-        1 if i == sub_policy(game, dice_value, player_index) else 0
+    return lambda game, player_index, dice_value: [
+        1 if i == sub_policy(game, player_index, dice_value) else 0
         for i in range(game["board"]["size"])
     ]

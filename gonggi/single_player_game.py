@@ -1,9 +1,9 @@
 import logging
-from typing import Callable
 
-from .simulation import (
+from gonggi.simulation import (
     Board,
     Game,
+    Policy,
     is_column_not_full,
     play_turn,
     print_half_board,
@@ -49,7 +49,7 @@ def is_half_board_not_full(game: Game) -> bool:
     )
 
 
-def run_single_player_game(game: Game, policy: Callable[[Game, int], int]) -> int:
+def run_single_player_game(game: Game, policy: Policy) -> int:
     """
     Plays the game until one side of the board is full.
     """

@@ -11,7 +11,7 @@ from gonggi.simulation import Game, is_column_not_full
 
 
 # noinspection PyUnusedLocal
-def first_empty_column(game: Game, dice_value: int, player_index: int) -> Optional[int]:
+def first_empty_column(game: Game, player_index: int, dice_value: int) -> Optional[int]:
     """
     Returns the first empty column if there is one.
     """
@@ -26,7 +26,7 @@ def first_empty_column(game: Game, dice_value: int, player_index: int) -> Option
 
 
 # noinspection PyUnusedLocal
-def first_non_full_column(game: Game, dice_value: int, player_index: int) -> int:
+def first_non_full_column(game: Game, player_index: int, dice_value: int) -> int:
     """
     Returns the first non-full column. There will always be one as long as the game is running.
     """
@@ -39,7 +39,7 @@ def first_non_full_column(game: Game, dice_value: int, player_index: int) -> int
     )
 
 
-def stack(game: Game, dice_value: int, player_index: int) -> Optional[int]:
+def stack(game: Game, player_index: int, dice_value: int) -> Optional[int]:
     """
     Returns the first column of the player's grid that already contains the dice_value.
     """
@@ -56,7 +56,7 @@ def stack(game: Game, dice_value: int, player_index: int) -> Optional[int]:
     )
 
 
-def spread(game: Game, dice_value: int, player_index: int) -> Optional[int]:
+def spread(game: Game, player_index: int, dice_value: int) -> Optional[int]:
     """
     Returns the first column of the player's grid that does not already contain the dice_value.
     """
@@ -73,7 +73,7 @@ def spread(game: Game, dice_value: int, player_index: int) -> Optional[int]:
     )
 
 
-def counter(game: Game, dice_value: int, player_index: int) -> Optional[int]:
+def counter(game: Game, player_index: int, dice_value: int) -> Optional[int]:
     """
     Returns the first column the player can use to delete his opponent's dice if there is one.
     """
@@ -81,7 +81,7 @@ def counter(game: Game, dice_value: int, player_index: int) -> Optional[int]:
         (
             col
             for col in range(game["board"]["size"])
-            if dice_value in game["board"]["grids"][int(not player_index)][col]
+            if dice_value in game["board"]["grids"][1 - player_index][col]
             and is_column_not_full(
                 game["board"]["size"], game["board"]["grids"][player_index][col]
             )
