@@ -18,20 +18,18 @@ def print_grid(size: int, grid: list[list[int]]):
         )
 
 
-def print_board(
-    board: Board, player_names: tuple[str, str] = ("Julien", "Aubin")
-) -> None:
+def print_board(board: Board, player_names: tuple[str, str]) -> None:
     """
     Prints the content of a board (empty cells are indicated with an X).
     """
     separation_line = (board["size"] * 4 - 1) * "-"
+    logging.info("")
     for player_idx in range(2):
         logging.info(
-            f"\n{player_names[player_idx]}'s side of the board\n{separation_line}"
+            f"{player_names[player_idx]}'s side of the board\n{separation_line}"
         )
         print_grid(board["size"], board["grids"][player_idx])
-
-    logging.info(f"{separation_line}\n")
+        logging.info(f"{separation_line}")
 
 
 def print_half_board(board: Board) -> None:
@@ -50,7 +48,7 @@ def print_scores(game: Game) -> None:
     first_line = f"{game['player_names'][0]}'s score: {game['player_scores'][0]}"
     second_line = f"{game['player_names'][1]}'s score: {game['player_scores'][1]}"
     logging.info(
-        f"{(max(len(first_line), len(second_line)) - 12) // 2 * '-'}"
+        f"\n{(max(len(first_line), len(second_line)) - 12) // 2 * '-'}"
         f" SCOREBOARD "
         f"{(max(len(first_line), len(second_line)) - 12) // 2 * '-'}"
     )

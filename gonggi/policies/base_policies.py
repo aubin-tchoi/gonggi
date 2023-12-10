@@ -24,7 +24,7 @@ def policy_cli(game: Game, dice_value: int, player_index: int) -> int:
     """
     Policy that consists in asking for user input.
     """
-    print_board(game["board"])
+    print_board(game["board"], game["player_names"])
     return int(
         input(
             f"{game['player_names'][player_index]} rolled a {dice_value}, in which column do you want to put it? "

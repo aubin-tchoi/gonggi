@@ -98,7 +98,7 @@ def main(args: argparse.Namespace = parse_args()) -> None:
         for run in range(args.runs):
             my_game = instantiate_new_single_player_game(args.size, args.sides)
             final_score = run_single_player_game(
-                my_game, apply_to_player(single_player_policy, 0), logging_level
+                my_game, apply_to_player(single_player_policy, 0)
             )
             stddev = sqrt(
                 (run - 1) / (run or 1) * stddev**2
@@ -111,12 +111,10 @@ def main(args: argparse.Namespace = parse_args()) -> None:
         for _ in range(args.runs):
             my_game = instantiate_new_game(args.size, args.sides, args.p1, args.p2)
 
-            # Set the policies of each player here.
             result = run_game(
                 my_game,
                 apply_to_player(first_player_policy, 0),
                 apply_to_player(second_player_policy, 1),
-                logging_level,
             )
             if result == "first":
                 first_wins += 1

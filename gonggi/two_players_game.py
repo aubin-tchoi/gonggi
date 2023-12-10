@@ -63,7 +63,6 @@ def run_game(
     game: Game,
     first_player_policy: Callable[[Game, int], int],
     second_player_policy: Callable[[Game, int], int],
-    logging_level: int,
 ) -> Literal["first", "second", "tie"]:
     """
     Plays the game until one side of the board is full.
@@ -72,8 +71,6 @@ def run_game(
         play_turn(game, first_player_policy)
         play_turn(game, second_player_policy, False)
         update_scores(game)
-        # check added to improve performances, see: https://docs.python.org/2/howto/logging.html#optimization
-        if logging_level <= 20:
-            print_game_info(game)
+        print_game_info(game)
 
     return print_winner(game)
