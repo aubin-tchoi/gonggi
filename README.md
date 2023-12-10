@@ -12,12 +12,12 @@ A die game of risk and reward.
 You will find here the rules and the implementation of a simulator for a 2-player dice game.
 
 > Note that this game has nothing to do with the game of gonggi, which is a traditional Korean game.
-> 
+>
 > We do not know the actual name of the game implemented here though.
 
 ## Usage
 
-Run the game using `poetry run play_game`, or alternatively without Poetry: `python3 scripts/play_game.py` 
+Run the game using `poetry run play_game`, or alternatively without Poetry: `python3 scripts/play_game.py`
 (this project is actually pure Python as detailed [here](#Implementation)).
 
 Doing so will run the game with the policies defined in `gonggi.policies.__init__.py`.
@@ -51,7 +51,7 @@ column j of his opponent's side of the board.
 ## Implementation
 
 This project is written in pure Python (no heavy computation is performed, no need for efficient NumPy-based operations)
-and supports Python >= 3.8.
+and supports Python >= 3.9.
 Therefore, the dependencies only contain development tools, and there is no particular need to install a dedicated venv.
 
 ### 📦 Dependency management and packaging

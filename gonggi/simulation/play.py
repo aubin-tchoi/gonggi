@@ -1,12 +1,12 @@
 import logging
 from random import randint
-from typing import Callable, List
+from typing import Callable
 
 from .cost import compute_scores
 from .data_structures import Game
 
 
-def is_column_not_full(size: int, column: List[int]) -> bool:
+def is_column_not_full(size: int, column: list[int]) -> bool:
     """
     Finds out whether a column can receive an additional value or not.
     """
@@ -60,7 +60,7 @@ def play_turn(
 def delete_dices(
     dice_added: int,
     column_added: int,
-    grid: List[List[int]],
+    grid: list[list[int]],
 ) -> None:
     """
     Deletes the dices with a certain value in a column of one of the two grids.

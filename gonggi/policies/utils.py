@@ -1,10 +1,10 @@
-from typing import Callable, List, Optional, Set, Tuple
+from typing import Callable, Optional
 
 from gonggi.simulation import Board, Game, is_column_not_full
 
 
 def chain_sub_policies(
-    args: Tuple[Game, int, int],
+    args: tuple[Game, int, int],
     *sub_policies: Callable[[Game, int, int], Optional[int]],
 ) -> int:
     """
@@ -16,8 +16,8 @@ def chain_sub_policies(
 
 
 def chain_set_policies(
-    args: Tuple[Game, int, int],
-    *set_policies: Callable[[Game, int, int], Set[int]],
+    args: tuple[Game, int, int],
+    *set_policies: Callable[[Game, int, int], set[int]],
 ) -> int:
     """
     Chains multiple policies that each return a set of acceptable values.
@@ -28,8 +28,8 @@ def chain_set_policies(
 
 
 def chain_score_policies(
-    args: Tuple[Game, int, int],
-    *score_policies: Callable[[Game, int, int], List[int]],
+    args: tuple[Game, int, int],
+    *score_policies: Callable[[Game, int, int], list[int]],
 ) -> int:
     """
     Chains multiple policies that each return a list of the scores of each column.
@@ -47,7 +47,7 @@ def chain_score_policies(
     )
 
 
-def board_fullness(board: Board) -> Tuple[int, int]:
+def board_fullness(board: Board) -> tuple[int, int]:
     """
     Finds the proportion of each side of the board that contains dices.
     """
@@ -59,7 +59,7 @@ def board_fullness(board: Board) -> Tuple[int, int]:
 
 def filter_admissible_values(
     filter_function: Callable[[int], bool], game: Game, player_index: int
-) -> Set[int]:
+) -> set[int]:
     return set(
         filter(
             lambda col: filter_function(col)
@@ -73,7 +73,7 @@ def filter_admissible_values(
 
 def sub_policy_to_score_policy(
     sub_policy: Callable[[Game, int, int], Optional[int]]
-) -> Callable[[Game, int, int], List[int]]:
+) -> Callable[[Game, int, int], list[int]]:
     """
     Converts a sub policy into a score policy (with a score of 1 on the chosen column and zero elsewhere).
     """

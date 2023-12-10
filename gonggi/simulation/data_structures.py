@@ -1,4 +1,8 @@
-from typing import List, Tuple, TypedDict
+"""
+This module defines the main data structures used for simulation.
+They are typed using TypedDicts to allow for transpilation using Pydantic in case a TypeScript front-end is developed.
+"""
+from typing import TypedDict
 
 
 class Board(TypedDict):
@@ -7,7 +11,7 @@ class Board(TypedDict):
     """
 
     size: int
-    grids: Tuple[List[List[int]], List[List[int]]]
+    grids: tuple[list[list[int]], list[list[int]]]
 
 
 class Game(TypedDict):
@@ -19,5 +23,5 @@ class Game(TypedDict):
     n_sides: int
     board: Board
 
-    player_names: Tuple[str, str]
-    player_scores: Tuple[int, int]
+    player_names: tuple[str, str]
+    player_scores: tuple[int, int]

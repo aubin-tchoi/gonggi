@@ -1,10 +1,10 @@
 import logging
-from typing import List, Literal, Tuple
+from typing import Literal
 
 from .data_structures import Board, Game
 
 
-def print_grid(size: int, grid: List[List[int]]):
+def print_grid(size: int, grid: list[list[int]]):
     """
     Prints a grid with 'X' for empty cells.
     """
@@ -19,7 +19,7 @@ def print_grid(size: int, grid: List[List[int]]):
 
 
 def print_board(
-    board: Board, player_names: Tuple[str, str] = ("Julien", "Aubin")
+    board: Board, player_names: tuple[str, str] = ("Julien", "Aubin")
 ) -> None:
     """
     Prints the content of a board (empty cells are indicated with an X).
