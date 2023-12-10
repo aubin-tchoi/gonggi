@@ -47,7 +47,7 @@ def chain_score_policies(
     )
 
 
-def board_fullness(board: Board) -> tuple[int, int]:
+def board_fullness(board: Board) -> tuple[float, float]:
     """
     Finds the proportion of each side of the board that contains dices.
     """

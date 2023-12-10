@@ -94,7 +94,7 @@ def main(args: argparse.Namespace = parse_args()) -> None:
     logging.basicConfig(format="%(message)s", level=logging_level)
 
     if args.single_player:
-        mean, stddev = 0, 0
+        mean, stddev = 0.0, 0.0
         for run in range(args.runs):
             my_game = instantiate_new_single_player_game(args.size, args.sides)
             final_score = run_single_player_game(
