@@ -17,8 +17,11 @@ You will find here the rules and the implementation of a simulator for a 2-playe
 
 ## Usage
 
-Run the game using `poetry run play_game`.
+Run the game using `poetry run play_game`, or alternatively without Poetry: `python3 scripts/play_game.py` 
+(this project is actually pure Python as detailed [here](#Implementation)).
+
 Doing so will run the game with the policies defined in `gonggi.policies.__init__.py`.
+
 See `poetry run play_game --help` for more information on the script options.
 
 ## 📜 Rules of the game
@@ -46,6 +49,10 @@ If a player places a die of value x in column j of his side of the board, all di
 column j of his opponent's side of the board.
 
 ## Implementation
+
+This project is written in pure Python (no heavy computation is performed, no need for efficient NumPy-based operations)
+and supports Python >= 3.8.
+Therefore, the dependencies only contain development tools, and there is no particular need to install a dedicated venv.
 
 ### 📦 Dependency management and packaging
 
