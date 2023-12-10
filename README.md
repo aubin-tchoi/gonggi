@@ -70,3 +70,5 @@ To install `poetry` follow the steps in: https://python-poetry.org/docs/.
 You can add your own policies in files `first_player_policy.py` and `second_player_policy.py`.
 
 To do so, use the template in `base_policies.py`.
+
+Choose the policy used in `gonggi.policies.__init__.py`. 

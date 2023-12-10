@@ -4,12 +4,14 @@ from math import sqrt
 from random import seed
 
 from gonggi import (
-    apply_to_player,
-    first_player_policy,
     instantiate_new_game,
     instantiate_new_single_player_game,
     run_game,
     run_single_player_game,
+)
+from gonggi.policies import (
+    apply_to_player,
+    first_player_policy,
     second_player_policy,
     single_player_policy,
 )

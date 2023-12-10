@@ -1,6 +1,7 @@
 from random import randint
 
 from gonggi.simulation import Game, is_column_not_full
+
 from .score_policies import best_counter, greedy
 from .sub_policies import counter, first_empty_column, first_non_full_column, stack
 from .utils import chain_score_policies, chain_sub_policies, sub_policy_to_score_policy
