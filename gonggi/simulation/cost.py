@@ -1,10 +1,8 @@
-from typing import Tuple, List
-
 from .data_structures import Board
 
 
 def find_player_score(
-    size: int, player_grid: List[List[int]], remove_stacking: bool = False
+    size: int, player_grid: list[list[int]], remove_stacking: bool = False
 ) -> int:
     """
     Finds out the score associated with a grid.
@@ -20,7 +18,7 @@ def find_player_score(
     )
 
 
-def compute_scores(board: Board) -> Tuple[int, int]:
+def compute_scores(board: Board) -> tuple[int, int]:
     """
     Computes the scores of the two players.
     """

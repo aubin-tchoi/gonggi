@@ -1,0 +1,39 @@
+[tool.poetry]
+name = "gonggi"
+version = "1.0.1"
+description = "Simulator for a die game of risk and reward. Code your own policies and put them face to face!!"
+authors = ["aubin-tchoi <aubin.tchoi@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.11.0"
+ruff = "^0.1.7"
+isort = "^5.13.0"
+mypy = "^1.7.1"
+pre-commit = "^3.6.0"
+
+[tool.poetry.scripts]
+play_game = "scripts.play_game:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.mypy_cache
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"

@@ -1,13 +1,13 @@
 import logging
-from typing import Callable
 
-from .simulation import (
-    Game,
+from gonggi.simulation import (
     Board,
+    Game,
+    Policy,
     is_column_not_full,
     play_turn,
-    update_scores,
     print_half_board,
+    update_scores,
 )
 
 
@@ -49,21 +49,15 @@ def is_half_board_not_full(game: Game) -> bool:
     )
 
 
-def run_single_player_game(
-    game: Game,
-    policy: Callable[[Game, int], int],
-    logging_level: int,
-) -> int:
+def run_single_player_game(game: Game, policy: Policy) -> int:
     """
     Plays the game until one side of the board is full.
     """
     while is_half_board_not_full(game):
         play_turn(game, policy)
         update_scores(game)
-        # check added to improve performances, see: https://docs.python.org/2/howto/logging.html#optimization
-        if logging_level <= 20:
-            logging.info("Your board:")
-            print_half_board(game["board"])
-            logging.info(f"Your score: {game['player_scores'][0]:>2}\n")
+        logging.info("Your board:")
+        print_half_board(game["board"])
+        logging.info(f"Your score: {game['player_scores'][0]:>2}\n")
 
     return game["player_scores"][0]

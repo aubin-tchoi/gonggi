@@ -1,14 +1,15 @@
 import logging
-from typing import Callable, Literal
+from typing import Literal
 
-from .simulation import (
-    Game,
+from gonggi.simulation import (
     Board,
+    Game,
+    Policy,
     is_column_not_full,
     play_turn,
-    update_scores,
     print_game_info,
     print_winner,
+    update_scores,
 )
 
 
@@ -60,20 +61,15 @@ def is_board_not_full(game: Game) -> bool:
 
 
 def run_game(
-    game: Game,
-    first_player_policy: Callable[[Game, int], int],
-    second_player_policy: Callable[[Game, int], int],
-    logging_level: int,
+    game: Game, first_player_policy: Policy, second_player_policy: Policy
 ) -> Literal["first", "second", "tie"]:
     """
     Plays the game until one side of the board is full.
     """
     while is_board_not_full(game):
         play_turn(game, first_player_policy)
-        play_turn(game, second_player_policy, False)
+        play_turn(game, second_player_policy, 1)
         update_scores(game)
-        # check added to improve performances, see: https://docs.python.org/2/howto/logging.html#optimization
-        if logging_level <= 20:
-            print_game_info(game)
+        print_game_info(game)
 
     return print_winner(game)

@@ -1,12 +1,11 @@
 import logging
 from random import randint
-from typing import Callable, List
 
 from .cost import compute_scores
-from .data_structures import Game
+from .data_structures import Game, Policy
 
 
-def is_column_not_full(size: int, column: List[int]) -> bool:
+def is_column_not_full(size: int, column: list[int]) -> bool:
     """
     Finds out whether a column can receive an additional value or not.
     """
@@ -15,8 +14,8 @@ def is_column_not_full(size: int, column: List[int]) -> bool:
 
 def play_turn(
     game: Game,
-    policy: Callable[[Game, int], int],
-    is_first_player: bool = True,
+    policy: Policy,
+    player_index: int = 0,
     remove_deletion: bool = False,
 ) -> None:
     """
@@ -25,15 +24,15 @@ def play_turn(
     - letting the player choose where to put it according to his policy
     - placing the die and deleting the opponent's dices if applicable
     """
-    player_name = game["player_names"][not int(is_first_player)]
-    grid = game["board"]["grids"][not int(is_first_player)]
+    player_name = game["player_names"][player_index]
+    grid = game["board"]["grids"][player_index]
 
-    # roll a dice
+    # roll a die
     dice_value = randint(1, game["n_sides"])
     logging.info(f"{player_name} rolled a {dice_value}.")
 
     # choose the column
-    move = policy(game, dice_value)
+    move = policy(game, player_index, dice_value)
     n_tries = 0
     while not (is_value_in_range := 0 <= move < len(grid)) or not is_column_not_full(
         game["board"]["size"], grid[move]
@@ -43,7 +42,7 @@ def play_turn(
             if is_value_in_range
             else "Incorrect value passed (not the index of a column), retrying."
         )
-        move = policy(game, dice_value)
+        move = policy(game, player_index, dice_value)
         if n_tries > 100:
             raise RuntimeError("There is an issue with the policy.")
         n_tries += 1
@@ -54,13 +53,13 @@ def play_turn(
 
     if not remove_deletion:
         # delete the opponent's dices
-        delete_dices(dice_value, move, game["board"]["grids"][int(is_first_player)])
+        delete_dices(dice_value, move, game["board"]["grids"][1 - player_index])
 
 
 def delete_dices(
     dice_added: int,
     column_added: int,
-    grid: List[List[int]],
+    grid: list[list[int]],
 ) -> None:
     """
     Deletes the dices with a certain value in a column of one of the two grids.
