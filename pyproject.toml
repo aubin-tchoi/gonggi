@@ -9,11 +9,11 @@ readme = "README.md"
 python = ">=3.9"
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.11.0"
-ruff = "^0.1.7"
+black = "^24.3.0"
+ruff = "^0.8.4"
 isort = "^5.13.0"
-mypy = "^1.7.1"
-pre-commit = "^3.6.0"
+mypy = "^1.14.0"
+pre-commit = "^4.0.1"
 
 [tool.poetry.scripts]
 play_game = "scripts.play_game:main"
